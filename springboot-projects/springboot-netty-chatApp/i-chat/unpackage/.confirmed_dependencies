@@ -1,0 +1,67 @@
+{
+	"index.html": {
+		"resources": [
+			"i-chatlist.html",
+			"i-chatme.html",
+			"i-chatdiscover.html"
+		],
+		"refer": [
+			"i-chatme.html",
+			"i-chatcontact.html",
+			"i-chatlist.html",
+			"i-chatdiscover.html"
+		]
+	},
+	"register.html": {
+		"refer": [
+			"register.html",
+			"login.html"
+		]
+	},
+	"login.html": {
+		"refer": [
+			"login.html",
+			"register.html",
+			"index.html"
+		]
+	},
+	"i-chatme.html": {
+		"refer": [
+			"myface.html",
+			"mynickname.html",
+			"login.html",
+			"myQRCode.html"
+		]
+	},
+	"myface.html": {
+		"refer": [
+			"plugin/v3.1.6/myface-uploader.html"
+		]
+	},
+	"i-chatdiscover.html": {
+		"refer": [
+			"searchFriends.html",
+			"scanme.html"
+		]
+	},
+	"searchFriends.html": {
+		"refer": [
+			"searchFriendsResult.html"
+		]
+	},
+	"scanme.html": {
+		"refer": [
+			"searchFriendsResult.html"
+		]
+	},
+	"i-chatcontact.html": {
+		"refer": [
+			"chatting.html"
+		]
+	},
+	"i-chatlist.html": {
+		"refer": [
+			"chatting.html"
+		]
+	}
+}

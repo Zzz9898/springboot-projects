@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link href="css/header.css" rel="stylesheet" />
+    <link rel="stylesheet" href="fontico/iconfont.css">
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+      	mui.plusReady(function(){
+      		plus.navigator.setStatusBarBackground("#000000");
+      		plus.navigator.setStatusBarStyle("light");
+      	});
+    </script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav title">
+	    <h1 class="mui-title title-color" id="ichat_title"><b>聊聊天</b></h1>
+	</header>
+	<nav class="mui-bar mui-bar-tab">
+	    <a class="mui-tab-item mui-active" tabindex="0">
+	        <span class="mui-icon mui-icon-chat"></span>
+	        <span class="mui-tab-label">消息</span>
+	    </a>
+	    <a class="mui-tab-item" tabindex="1">
+	        <span class="mui-icon iconfont icon-pengyou"></span>
+	        <span class="mui-tab-label">朋友</span>
+	    </a>
+	    <a class="mui-tab-item" tabindex="2">
+	        <span class="mui-icon iconfont icon-faxian"></span>
+	        <span class="mui-tab-label">发现</span>
+	    </a>
+	    <a class="mui-tab-item" tabindex="3">
+	        <span class="mui-icon iconfont icon-iconfuzhi"></span>
+	        <span class="mui-tab-label">我的</span>
+	    </a>
+	</nav>
+	
+	<script type="text/javascript">
+		var pageArray = [
+			{
+				pageId:"i-chatlist.html",
+				pageUrl:"i-chatlist.html"
+			},
+			{
+				pageId:"i-chatcontact.html",
+				pageUrl:"i-chatcontact.html"
+			},
+			{
+				pageId:"i-chatdiscover.html",
+				pageUrl:"i-chatdiscover.html"
+			},
+			{
+				pageId:"i-chatme.html",
+				pageUrl:"i-chatme.html"
+			}
+		];
+		
+		var pageStyle = {
+			top: "44px",
+			bottom: "50px"
+		}
+		
+		mui.plusReady(function(){
+			console.log("ready");
+			
+			mui.back = function(){
+				return false;
+			}
+			
+			netChangeSwitch();
+			
+			var indexWebview = plus.webview.currentWebview();
+			for (var i = 0;i<pageArray.length;i++){
+				var ipage = plus.webview.create(pageArray[i].pageUrl,pageArray[i].pageId,pageStyle);
+				ipage.hide();
+				indexWebview.append(ipage);
+			}
+			plus.webview.show(pageArray[0].pageId);
+			
+			// 批量绑定tap事件，展示不同的页面
+			mui(".mui-bar-tab").on("tap", "a", function() {
+				var tabindex = this.getAttribute("tabindex");
+				
+				// 显示点击的tab选项所对应的页面
+				plus.webview.show(pageArray[tabindex].pageId, "fade-in", 200);
+				
+				// 隐藏其他的不需要的页面
+				for (var i = 0 ; i < pageArray.length ; i ++) {
+					if (i != tabindex) {
+						plus.webview.hide(pageArray[i].pageId, "fade-out", 200);
+					}
+				}
+			});
+			
+			// 延时加载
+			setTimeout("initData()", "1000");
+		});
+		
+		// 监听网络状态更改
+		function netChangeSwitch(){
+			document.addEventListener("netchange", function(){
+				// 网络状态获取和判断
+				var connectionStatus = plus.networkinfo.getCurrentType();
+				if (connectionStatus != 0 && connectionStatus != 1) {
+					// 重新打开网络连接
+					var ichat_title = document.getElementById("ichat_title");
+					ichat_title.innerHTML = "<b>聊聊天</b>";
+				} else {
+					// 关闭网络连接
+					var ichat_title = document.getElementById("ichat_title");
+					ichat_title.innerHTML = "<b>聊聊天(未连接)</b>";
+				}
+			});
+		}
+		
+		// 预加载
+		function initData() {
+			var ichat_chatlist = plus.webview.getWebviewById("i-chatlist.html");
+			mui.fire(ichat_chatlist, "refresh");
+			
+			var ichat_me = plus.webview.getWebviewById("i-chatme.html");
+			mui.fire(ichat_me, "refresh");
+			
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ichat?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+#xml文件
+mybatis:
+  mapper-locations: classpath:com.ichat.mapper/*Mapper.xml
+  type-aliases-package: com.ichat.pojo
